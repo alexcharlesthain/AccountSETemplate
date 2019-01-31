@@ -4,6 +4,7 @@ import static javax.transaction.Transactional.TxType.REQUIRED;
 import static javax.transaction.Transactional.TxType.SUPPORTS;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.enterprise.inject.Default;
 import javax.inject.Inject;
@@ -26,18 +27,26 @@ public class AccountDBRepository implements AccountRepository {
 	private JSONUtil util;
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public String getAllAccounts() {
-		Query query = em.createQuery("Select a FROM Account a");
-		Collection<Account> accounts = (Collection<Account>) query.getResultList();
-		return util.getJSONForObject(accounts);
+		Query query = em.createQuery("SELECT a FROM Account a");
+		List<Account> accounts = query.getResultList();
+		return accounts.toString();
 	}
 	
-	@Override
-	public String findAccount(Long id) {
-		Query query = em.createQuery("Select a FROM Account a WHERE id = "+id+"");
-		Collection<Account> accounts = (Collection<Account>) query.getResultList();
-		return util.getJSONForObject(accounts);
-	}
+//	@Override
+//	public String getAllAccounts() {
+//		Query query = em.createQuery("SELECT a FROM Account a");
+//		Collection<Account> allAccounts = (Collection<Account>) query.getResultList();
+//		return util.getJSONForObject(allAccounts);
+//	}
+	
+//	@Override
+//	public String findAccount(Long id) {
+//		Query query = em.createQuery("Select a FROM Account a WHERE id = "+id+"");
+//		Collection<Account> accounts = (Collection<Account>) query.getResultList();
+//		return util.getJSONForObject(accounts);
+//	}
 	
 	@Override
 	@Transactional(REQUIRED)
@@ -72,6 +81,12 @@ public class AccountDBRepository implements AccountRepository {
 	
 	public void setUtil(JSONUtil util) {
 		this.util = util;
+	}
+
+	@Override
+	public String findAccount(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

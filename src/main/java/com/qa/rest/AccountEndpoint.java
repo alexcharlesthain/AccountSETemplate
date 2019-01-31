@@ -12,14 +12,12 @@ import javax.ws.rs.Produces;
 import com.qa.business.AccountService;
 
 @Path("/account")
-//class i want to activate
 public class AccountEndpoint {
 	
 	@Inject
 	private AccountService service;
 
 	@Path("/getAllAccounts")
-	// method that i want to activate
 	@GET
 	@Produces({ "application/json" })
 	public String getAllAccounts() {

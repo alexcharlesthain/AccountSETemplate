@@ -1,5 +1,9 @@
 package com.qa.persistence.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Account {
 	
 	//private Long id; 
@@ -8,6 +12,7 @@ public class Account {
 	
 	private String lastName;
 	
+	@Id
 	private String accountNumber;
 
 	public Account() {
