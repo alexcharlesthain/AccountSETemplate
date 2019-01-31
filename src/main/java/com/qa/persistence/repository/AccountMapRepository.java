@@ -3,9 +3,12 @@ package com.qa.persistence.repository;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.enterprise.inject.Alternative;
+
 import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
 
+@Alternative
 public class AccountMapRepository implements AccountRepository{
 	
 	Map<Long, Account> account = new HashMap<>();
@@ -14,6 +17,10 @@ public class AccountMapRepository implements AccountRepository{
 	
 	public String getAllAccounts() {
 		return util.getJSONForObject(account);
+	}
+	
+	public int returnSize() {
+		return account.size();
 	}
 
 	public String createAccount(String accountData) {
@@ -30,11 +37,21 @@ public class AccountMapRepository implements AccountRepository{
 	public String updateAccount(Long id, String accountData) {
 		Account updAccount = util.getObjectForJSON(accountData, Account.class);
 		account.replace(id, account.get(id), updAccount);
-		return "Updated Account: " +id+ " with data: First Name: " + updAccount.getFirstName() + "." + ". Last Name: " + updAccount.getSecondName()+ ". Account Number: " + updAccount.getAccountNumber() + ".";
+		return "Updated Account: " +id+ " with data: First Name: " + updAccount.getFirstName() + ". Last Name: " + updAccount.getSecondName()+ ". Account Number: " + updAccount.getAccountNumber();
 	}
 	
 	public String findAccount(Long id) {
 		return util.getJSONForObject(account.get(id));
-	}			
+	}	
+	
+	public int getAccountByName(String name) {
+		int count = 0;
+		for(Account account: account.values()) {
+			if(account.getFirstName().equals(name)) {
+			count++;	
+			}
+		}			
+		return count;
+	}
 }
 
